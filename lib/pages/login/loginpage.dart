@@ -5,7 +5,6 @@ import 'package:ukk_kasir/pages/login/login.dart';
 import 'package:ukk_kasir/pages/manager/dashboardm.dart';
 import 'package:ukk_kasir/services/auth/auth_service.dart';
 
-
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -60,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 20),
               // Log In Text
               Text(
-                'Logn',
+                'Login',
                 style: TextStyle(
                   fontSize: 29,
                   fontWeight: FontWeight.bold,
@@ -98,7 +97,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               SizedBox(height: 10),
-              // Remember me Checkbox
               Row(
                 children: [
                   Checkbox(
@@ -138,59 +136,61 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-Future <void> _login() async {
-  String username = _usernameController.text;
-  String password = _passwordController.text;
+  Future<void> _login() async {
+    String username = _usernameController.text;
+    String password = _passwordController.text;
 
-  if (username.isEmpty || password.isEmpty) {
-    _showPopup(context, 'Username and Password cannot be empty.');
-    return;
-  }
-
-  // Show loading indicator
-  showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) {
-      return Center(child: CircularProgressIndicator());
-    },
-  );
-
-  try {
-    // Await the login call
-    Map<String, dynamic>? result = await _authService.login(username, password, '58');
-
-    Navigator.of(context).pop(); // Close loading indicator
-    print("result: $result");
-    if (result != null) {
-      String role = result['user']['role'];
-      if (role == 'admin') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => Navbar()),
-        );
-      } else if (role == 'cashier') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
-      } else if (role == 'manager') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomeManager()),
-        );
-      } else {
-        _showPopup(context, 'Unknown role. Please contact support.');
-      }
-    } else {
-      _showPopup(context, 'Login failed. Please check your credentials.');
+    if (username.isEmpty || password.isEmpty) {
+      _showPopup(context, 'Username and Password cannot be empty.');
+      return;
     }
-  } catch (e) {
-    Navigator.of(context).pop(); // Close loading indicator
-    // Provide more context about the error
-    _showPopup(context, 'An error occurred: ${e.toString()}. Please try again.');
+
+    // Show loading indicator
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Center(child: CircularProgressIndicator());
+      },
+    );
+
+    try {
+      // Await the login call
+      Map<String, dynamic>? result =
+          await _authService.login(username, password, '58');
+
+      Navigator.of(context).pop(); // Close loading indicator
+      print("result: $result");
+      if (result != null) {
+        String role = result['user']['role'];
+        if (role == 'admin') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Navbar()),
+          );
+        } else if (role == 'cashier') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
+        } else if (role == 'manager') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomeManager()),
+          );
+        } else {
+          _showPopup(context, 'Unknown role. Please contact support.');
+        }
+      } else {
+        _showPopup(context, 'Login failed. Please check your credentials.');
+      }
+    } catch (e) {
+      Navigator.of(context).pop(); // Close loading indicator
+      // Provide more context about the error
+      _showPopup(
+          context, 'An error occurred: ${e.toString()}. Please try again.');
+    }
   }
-}
 }
 
 void _showPopup(BuildContext context, String message) {

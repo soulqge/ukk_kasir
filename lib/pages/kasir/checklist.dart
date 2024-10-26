@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ukk_kasir/data/model_data.dart';
+import 'package:ukk_kasir/pages/kasir/checkout_page.dart';
 import 'package:ukk_kasir/style/styles.dart';
 
 class OrderItem {
@@ -143,8 +144,7 @@ class _OrderPageState extends State<OrderPage> {
                                       builder: (BuildContext context) {
                                         return AlertDialog(
                                           title: Text("Konfirmasi Hapus"),
-                                          content: Text(
-                                              "Hapus orderan ini?"),
+                                          content: Text("Hapus orderan ini?"),
                                           actions: [
                                             TextButton(
                                               child: Text("Tidak"),
@@ -215,23 +215,37 @@ class _OrderPageState extends State<OrderPage> {
                       height: 10,
                     ),
                     ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Styles.themeColor, // Warna background tombol
-                          foregroundColor: Colors.white, // Warna teks tombol
-                          side: const BorderSide(
-                              color: Colors
-                                  .white), // Membuat border putih pada tombol
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                5), // Membuat sudut border lebih melengkung
-                          ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Styles.themeColor,
+                        foregroundColor: Colors.white,
+                        side: BorderSide(color: Colors.white),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                        onPressed: () {},
-                        child: Text(
-                          "Order ->",
-                          style: TextStyle(fontSize: 18),
-                        ))
+                      ),
+                      onPressed: () {
+                        // Calculate total price
+                        int totalAmount =
+                            _calculateTotalPrice(widget.orderList);
+
+                        // Navigate to CheckoutPage with data
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CheckoutPage(
+                              cashierName: "Arif",
+                              tableNumber: 12,
+                              orderList: widget.orderList,
+                              totalAmount: totalAmount,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Order ->",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    )
                   ],
                 ),
               ),
