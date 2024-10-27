@@ -81,21 +81,41 @@ class _MenuUIState extends State<MenuUI> {
                     color: Colors.white,
                   ),
                 ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                subtitle: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "${menu["harga"]}",
-                      style: GoogleFonts.inter(
-                        fontSize: 15,
-                        color: Colors.white,
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${menu["harga"]}",
+                          style: GoogleFonts.inter(
+                            fontSize: 15,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          "Jenis: ${menu["jenis"]}",
+                          style: GoogleFonts.inter(
+                            fontSize: 15,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      "Jenis: ${menu["jenis"]}",
-                      style: GoogleFonts.inter(
-                        fontSize: 15,
-                        color: Colors.white,
+                    Align(
+                      alignment: Alignment.center,
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TambahMenuPage(title: 'Edit Menu',)
+                          ),
+                        );
+                        },
+                        icon: Icon(Icons.edit, color: Colors.white,),
                       ),
                     ),
                   ],
@@ -109,7 +129,7 @@ class _MenuUIState extends State<MenuUI> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TambahMenuPage()),
+            MaterialPageRoute(builder: (context) => TambahMenuPage(title: 'Tambah Menu',)),
           );
         },
         backgroundColor: Styles.themeColor,

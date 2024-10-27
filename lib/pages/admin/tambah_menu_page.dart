@@ -4,7 +4,10 @@ import 'package:ukk_kasir/components/admin/form_box_user.dart';
 import 'package:ukk_kasir/style/styles.dart';
 
 class TambahMenuPage extends StatefulWidget {
-  const TambahMenuPage({super.key});
+
+  final String title;
+
+  const TambahMenuPage({super.key, required this.title});
 
   @override
   State<TambahMenuPage> createState() => _TambahMenuPageState();
@@ -12,6 +15,7 @@ class TambahMenuPage extends StatefulWidget {
 
 class _TambahMenuPageState extends State<TambahMenuPage> {
   String _selectedRole = "User";
+  
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,7 @@ class _TambahMenuPageState extends State<TambahMenuPage> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(92, 92, 91, 1),
         title: Text(
-          "Add User",
+          widget.title,
           style: GoogleFonts.inter(
               fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
         ),
