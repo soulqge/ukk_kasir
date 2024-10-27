@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ukk_kasir/components/order_row.dart';
-import 'package:ukk_kasir/pages/kasir/histori_transaksi.dart';
 import 'package:ukk_kasir/pages/login/login.dart';
 import 'package:ukk_kasir/pages/manager/laporan_keuangan.dart';
 
